@@ -1,5 +1,3 @@
-// MONGODB PW: QD3WPnFHdkLZx8zM
-// CONNECTION: mongodb+srv://Access:QD3WPnFHdkLZx8zM@cluster0-tbb51.mongodb.net/test?retryWrites=true&w=majority
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -7,19 +5,16 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 
-const stuffRoutes = require('./src/routes/stuff');
-const userRoutes = require('./src/routes/user');
-const staffRoutes = require('./src/routes/staff');
-const bookRoutes = require('./src/routes/book');
+const restaurantRoutes = require('./src/routes/restaurant');
 
 const app = express();
-const uri = 'mongodb+srv://ikenna:pato7286@cluster0-tbb51.mongodb.net/flight?retryWrites=true&w=majority';
+const uri = 'mongodb://localhost:27017/wolt-db'
 mongoose.connect(uri, { useFindAndModify: false })
 .then(() => {
-    console.log('Successfully connected to mongoDB Atlas!');
+    console.log('Successfully connected to mongoDB!');
 })
 .catch((error) => {
-    console.log('Unable to connect to mongoDB Atlas');
+    console.log('Unable to connect to mongoDB');
     console.error(error);
 });
 
@@ -39,9 +34,6 @@ app.use((req, res, next) => {
 
   app.use('/images', express.static(path.join(__dirname, 'images')));
   
-  app.use('/api/stuff', stuffRoutes);
-  app.use('/api/user', userRoutes);
-  app.use('/api/staff', staffRoutes);
-  app.use('/api/book', bookRoutes);
+  app.use('/api/restaurants', restaurantRoutes);
 
 module.exports = app;
